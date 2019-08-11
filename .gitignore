@@ -1,0 +1,29 @@
+*.lock
+*.swp
+*.out
+*.log
+*.jar
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# jenv
+.java-version
+ 
+# Maven
+target/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+*.ipr
+atlassian-ide-plugin.xml
