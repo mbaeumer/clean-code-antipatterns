@@ -18,9 +18,22 @@ public class MovieServiceTest {
     private MovieService movieService;
 
     @Test
-    public void getMovies(){
-        movieService.getMovies(null, "Con%Air", null, 1997, 1, "json");
+    public void getMoviesByTitle(){
+        movieService.getMovies(null, "Lethal Weapon 2", null,null, -1, 1, "json", 0);
+    }
 
+    @Test
+    public void getMoviesByID(){
+        movieService.getMovies("tt3896198", null, null,null, -1, 1, "json", 0);
+    }
 
+    @Test
+    public void getMoviesBySearch(){
+        movieService.getMovies(null, null, "Lethal Weapon",null, -1, 1, "json", 0);
+    }
+
+    @Test
+    public void getError(){
+        movieService.getMovies(null, "KalleAnka123", null,null, -1, 1, "json", 0);
     }
 }

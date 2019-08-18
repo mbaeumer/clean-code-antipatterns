@@ -14,12 +14,37 @@ public class MovieService {
     private RestTemplate restTemplate;
 
 
-    public String getMovies(String i, String title, String type, int year, int plot, String returnType){
+    public String getMovies(String i, String title, String search, String type, int year, int plot, String returnType, int page){
 
         String url = "http://www.omdbapi.com/?apikey=c626976c";
 
-        if (i == null && title == null){
-            return null;
+        if (search == null) {
+            if (i == null && title == null) {
+                return null;
+            }
+        }else{
+            url += "&s=" + search;
+            if (type != null){
+                if (type.equalsIgnoreCase("movie")){
+                    url += "&type=movie";
+                }else if (type.equalsIgnoreCase("series")){
+                    url += "&type=series";
+                }else if (type.equalsIgnoreCase("episode")){
+                    url += "&type=episode";
+                }
+            }
+
+            if (year > 0){
+                url += "&y=" + new Integer(year).toString();
+            }
+
+            if (returnType != null){
+                url += "&r=" + returnType;
+            }
+
+            if (page > 0 && page <= 100){
+                url += "&page=" + page;
+            }
         }
 
         if (i != null){
@@ -48,7 +73,6 @@ public class MovieService {
             url += "&plot=full";
         }
 
-
         if (returnType != null){
             url += "&r=" + returnType;
         }
@@ -67,6 +91,13 @@ public class MovieService {
                 url, String.class);
 
         int status = responseEntity.getStatusCode().value();
+
+        if (responseEntity.getBody().contains("\"Response\":\"False\"")){
+            // something went wrong...
+
+        }else{
+
+        }
         System.out.println(status);
         System.out.println(responseEntity.getBody());
         return responseEntity.getBody();
