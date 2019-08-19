@@ -1,0 +1,76 @@
+{
+  "Search": [
+    {
+      "Title": "Lethal Weapon",
+      "Year": "1987",
+      "imdbID": "tt0093409",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BZTllNWNlZjctMWQwMS00ZDc3LTg5ZjMtNzhmNzhjMmVhYTFlXkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Lethal Weapon 2",
+      "Year": "1989",
+      "imdbID": "tt0097733",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYTg0YmE1M2ItNGM2OC00MmZjLTgwMTMtZjlmOGE4N2EyNTVhXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Lethal Weapon 3",
+      "Year": "1992",
+      "imdbID": "tt0104714",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BOTFlNjI0NDQtMzlkNC00ZDU0LWE0ODktYmI2OTc2YjZlZmVlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Lethal Weapon 4",
+      "Year": "1998",
+      "imdbID": "tt0122151",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYmU2YTYwYmUtMTYzOC00YzJmLTk1NDktMzU4YzA3Njc1ZmY0XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Lethal Weapon",
+      "Year": "2016–2019",
+      "imdbID": "tt5164196",
+      "Type": "series",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMzMyNzM1MTczM15BMl5BanBnXkFtZTgwNDg4MzA0NjM@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Mel Gibson: God's Lethal Weapon",
+      "Year": "2004",
+      "imdbID": "tt0405151",
+      "Type": "movie",
+      "Poster": "N/A"
+    },
+    {
+      "Title": "Mel Gibson's Video Diary 2: Lethal Weapon 3",
+      "Year": "1991",
+      "imdbID": "tt0253245",
+      "Type": "movie",
+      "Poster": "N/A"
+    },
+    {
+      "Title": "Lethal Weapon",
+      "Year": "1992",
+      "imdbID": "tt0301543",
+      "Type": "game",
+      "Poster": "N/A"
+    },
+    {
+      "Title": "The Lethal Weapon",
+      "Year": "2014",
+      "imdbID": "tt6019738",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYTI0ZWRjOTgtNWMyNS00Nzc1LTlkZmYtNmEwMzkxOTRiYmI2XkEyXkFqcGdeQXVyNTE3NzcyNjg@._V1_SX300.jpg"
+    },
+    {
+      "Title": "The Lethal Weapon",
+      "Year": "2014",
+      "imdbID": "tt6019738",
+      "Type": "movie",
+      "Poster": "N/A"
+    }
+  ],
+  "totalResults": "18",
+  "Response": "True"
+}

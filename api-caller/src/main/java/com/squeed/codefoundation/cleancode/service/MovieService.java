@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -14,7 +16,7 @@ public class MovieService {
     private RestTemplate restTemplate;
 
 
-    public String getMovies(String i, String title, String search, String type, int year, int plot, String returnType, int page){
+    public List<Movie> getMovies(String i, String title, String search, String type, int year, int plot, String returnType, int page){
 
         String url = "http://www.omdbapi.com/?apikey=c626976c";
 
@@ -86,20 +88,32 @@ public class MovieService {
         r=data type of return value
          */
 
+        List<Movie> movies = new ArrayList<>();
         System.out.println(url);
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(
-                url, String.class);
+        if (search == null) {
+            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
+                    url, Movie.class);
 
-        int status = responseEntity.getStatusCode().value();
+            int status = responseEntity.getStatusCode().value();
 
-        if (responseEntity.getBody().contains("\"Response\":\"False\"")){
-            // something went wrong...
+            if (responseEntity.getBody().isResponse()) {
+                movies.add(responseEntity.getBody());
 
+            } else {
+                // something went wrong...
+            }
         }else{
+            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
+                    url, SearchResponse.class);
+
+            int status = responseEntity.getStatusCode().value();
+
+            movies = responseEntity.getBody().getSearch();
 
         }
-        System.out.println(status);
-        System.out.println(responseEntity.getBody());
-        return responseEntity.getBody();
+        //System.out.println(status);
+
+        //System.out.println(responseEntity.getBody());
+        return movies;
     }
 }
