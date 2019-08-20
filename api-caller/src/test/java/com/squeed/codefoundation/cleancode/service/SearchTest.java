@@ -20,7 +20,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+//@SpringBootTest
 public class SearchTest {
     @Autowired
     RestTemplate restTemplate;
