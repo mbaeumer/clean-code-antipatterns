@@ -15,7 +15,16 @@ public class MovieService {
     @Autowired
     private RestTemplate restTemplate;
 
-
+    /**
+     *  http://www.omdbapi.com/?i=tt3896198&apikey=c626976c
+     *  parameters:
+     *         i=imdb ID
+     *         t=title
+     *         type=movie/series/episode
+     *         y=year
+     *         plot=short/full
+     *         r=data type of return value
+     */
     public List<Movie> getMovies(String i, String title, String search, String type, int year, int plot, String returnType, int page){
 
         String url = "http://www.omdbapi.com/?apikey=c626976c";
@@ -24,69 +33,60 @@ public class MovieService {
             if (i == null && title == null) {
                 return null;
             }
-        }else{
+        } else {
             url += "&s=" + search;
-            if (type != null){
-                if (type.equalsIgnoreCase("movie")){
+            if (type != null) {
+                if (type.equalsIgnoreCase("movie")) {
                     url += "&type=movie";
-                }else if (type.equalsIgnoreCase("series")){
+                }else if (type.equalsIgnoreCase("series")) {
                     url += "&type=series";
-                }else if (type.equalsIgnoreCase("episode")){
+                }else if (type.equalsIgnoreCase("episode")) {
                     url += "&type=episode";
                 }
             }
 
-            if (year > 0){
+            if (year > 0) {
                 url += "&y=" + new Integer(year).toString();
             }
 
-            if (returnType != null){
+            if (returnType != null) {
                 url += "&r=" + returnType;
             }
 
-            if (page > 0 && page <= 100){
+            if (page > 0 && page <= 100) {
                 url += "&page=" + page;
             }
         }
 
-        if (i != null){
+        if (i != null) {
             url += "&i=" + i;
-        }else if (title != null){
+        } else if (title != null) {
             url += "&t=" + title;
         }
 
-        if (type != null){
-            if (type.equalsIgnoreCase("movie")){
+        if (type != null) {
+            if (type.equalsIgnoreCase("movie")) {
                 url += "&type=movie";
-            }else if (type.equalsIgnoreCase("series")){
+            } else if (type.equalsIgnoreCase("series")) {
                 url += "&type=series";
-            }else if (type.equalsIgnoreCase("episode")){
+            } else if (type.equalsIgnoreCase("episode")) {
                 url += "&type=episode";
             }
         }
 
-        if (year > 0){
+        if (year > 0) {
             url += "&y=" + new Integer(year).toString();
         }
 
-        if (plot == 0){
+        if (plot == 0) {
             url += "&plot=short";
-        }else{
+        } else {
             url += "&plot=full";
         }
 
-        if (returnType != null){
+        if (returnType != null) {
             url += "&r=" + returnType;
         }
-        //http://www.omdbapi.com/?i=tt3896198&apikey=c626976c
-        /* parameters:
-        i=imdb ID
-        t=title
-        type=movie/series/episode
-        y=year
-        plot=short/full
-        r=data type of return value
-         */
 
         List<Movie> movies = new ArrayList<>();
         System.out.println(url);
@@ -94,26 +94,16 @@ public class MovieService {
             ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
                     url, Movie.class);
 
-            int status = responseEntity.getStatusCode().value();
-
             if (responseEntity.getBody().isResponse()) {
                 movies.add(responseEntity.getBody());
-
-            } else {
-                // something went wrong...
             }
-        }else{
+        } else {
             ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
                     url, SearchResponse.class);
-
-            int status = responseEntity.getStatusCode().value();
 
             movies = responseEntity.getBody().getSearch();
 
         }
-        //System.out.println(status);
-
-        //System.out.println(responseEntity.getBody());
         return movies;
     }
 }
