@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MovieService {
@@ -27,7 +26,7 @@ public class MovieService {
      */
     public List<Movie> getMovies(String imdbId, String title, String search, String type, int year, int plot, String returnType, int page){
 
-        if (search == null && imdbId == null && title == null) {
+        if (notEnoughParameters(search, imdbId, title)) {
             return null;
         }
 
@@ -107,5 +106,9 @@ public class MovieService {
 
         }
         return movies;
+    }
+
+    private static boolean notEnoughParameters(String search, String imdbId, String title) {
+        return search == null && imdbId == null && title == null;
     }
 }
