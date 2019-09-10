@@ -25,12 +25,12 @@ public class MovieService {
      *         plot=short/full
      *         r=data type of return value
      */
-    public List<Movie> getMovies(String i, String title, String search, String type, int year, int plot, String returnType, int page){
+    public List<Movie> getMovies(String imdbId, String title, String search, String type, int year, int plot, String returnType, int page){
 
         String url = "http://www.omdbapi.com/?apikey=c626976c";
 
         if (search == null) {
-            if (i == null && title == null) {
+            if (imdbId == null && title == null) {
                 return null;
             }
         } else {
@@ -58,8 +58,8 @@ public class MovieService {
             }
         }
 
-        if (i != null) {
-            url += "&i=" + i;
+        if (imdbId != null) {
+            url += "&i=" + imdbId;
         } else if (title != null) {
             url += "&t=" + title;
         }
