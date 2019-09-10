@@ -24,74 +24,89 @@ public class MovieService {
      *         plot=short/full
      *         r=data type of return value
      */
-    public List<Movie> getMovies(String imdbId, String title, String search, String type, int year, int plot, String returnType, int page){
+    public List<Movie> getMovies(String imdbId, String title, String search, String type, int year, int plot, String returnType, int page) {
+        return getMovies(new OmdbApiParameters(imdbId, title, search, type, year, plot, returnType, page));
+    }
 
-        if (notEnoughParameters(search, imdbId, title)) {
+    /**
+     *  http://www.omdbapi.com/?i=tt3896198&apikey=c626976c
+     *  parameters:
+     *         i=imdb ID
+     *         t=title
+     *         type=movie/series/episode
+     *         y=year
+     *         plot=short/full
+     *         r=data type of return value
+     * @param omdbApiParameters
+     */
+    public List<Movie> getMovies(OmdbApiParameters omdbApiParameters){
+
+        if (notEnoughParameters(omdbApiParameters.getSearch(), omdbApiParameters.getImdbId(), omdbApiParameters.getTitle())) {
             return null;
         }
 
         String url = "http://www.omdbapi.com/?apikey=c626976c";
 
-        if (search == null) {
+        if (omdbApiParameters.getSearch() == null) {
 
         } else {
-            url += "&s=" + search;
-            if (type != null) {
-                if (type.equalsIgnoreCase("movie")) {
+            url += "&s=" + omdbApiParameters.getSearch();
+            if (omdbApiParameters.getType() != null) {
+                if (omdbApiParameters.getType().equalsIgnoreCase("movie")) {
                     url += "&type=movie";
-                } else if (type.equalsIgnoreCase("series")) {
+                } else if (omdbApiParameters.getType().equalsIgnoreCase("series")) {
                     url += "&type=series";
-                } else if (type.equalsIgnoreCase("episode")) {
+                } else if (omdbApiParameters.getType().equalsIgnoreCase("episode")) {
                     url += "&type=episode";
                 }
             }
 
-            if (year > 0) {
-                url += "&y=" + new Integer(year).toString();
+            if (omdbApiParameters.getYear() > 0) {
+                url += "&y=" + new Integer(omdbApiParameters.getYear()).toString();
             }
 
-            if (returnType != null) {
-                url += "&r=" + returnType;
+            if (omdbApiParameters.getReturnType() != null) {
+                url += "&r=" + omdbApiParameters.getReturnType();
             }
 
-            if (page > 0 && page <= 100) {
-                url += "&page=" + page;
+            if (omdbApiParameters.getPage() > 0 && omdbApiParameters.getPage() <= 100) {
+                url += "&page=" + omdbApiParameters.getPage();
             }
         }
 
-        if (imdbId != null) {
-            url += "&i=" + imdbId;
-        } else if (title != null) {
-            url += "&t=" + title;
+        if (omdbApiParameters.getImdbId() != null) {
+            url += "&i=" + omdbApiParameters.getImdbId();
+        } else if (omdbApiParameters.getTitle() != null) {
+            url += "&t=" + omdbApiParameters.getTitle();
         }
 
-        if (type != null) {
-            if (type.equalsIgnoreCase("movie")) {
+        if (omdbApiParameters.getType() != null) {
+            if (omdbApiParameters.getType().equalsIgnoreCase("movie")) {
                 url += "&type=movie";
-            } else if (type.equalsIgnoreCase("series")) {
+            } else if (omdbApiParameters.getType().equalsIgnoreCase("series")) {
                 url += "&type=series";
-            } else if (type.equalsIgnoreCase("episode")) {
+            } else if (omdbApiParameters.getType().equalsIgnoreCase("episode")) {
                 url += "&type=episode";
             }
         }
 
-        if (year > 0) {
-            url += "&y=" + new Integer(year).toString();
+        if (omdbApiParameters.getYear() > 0) {
+            url += "&y=" + new Integer(omdbApiParameters.getYear()).toString();
         }
 
-        if (plot == 0) {
+        if (omdbApiParameters.getPlot() == 0) {
             url += "&plot=short";
         } else {
             url += "&plot=full";
         }
 
-        if (returnType != null) {
-            url += "&r=" + returnType;
+        if (omdbApiParameters.getReturnType() != null) {
+            url += "&r=" + omdbApiParameters.getReturnType();
         }
 
         List<Movie> movies = new ArrayList<>();
         System.out.println(url);
-        if (search == null) {
+        if (omdbApiParameters.getSearch() == null) {
             ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
                     url, Movie.class);
 
