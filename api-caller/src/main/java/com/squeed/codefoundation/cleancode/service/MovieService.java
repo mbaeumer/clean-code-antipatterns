@@ -27,20 +27,22 @@ public class MovieService {
      */
     public List<Movie> getMovies(String imdbId, String title, String search, String type, int year, int plot, String returnType, int page){
 
+        if (search == null && imdbId == null && title == null) {
+            return null;
+        }
+
         String url = "http://www.omdbapi.com/?apikey=c626976c";
 
         if (search == null) {
-            if (imdbId == null && title == null) {
-                return null;
-            }
+
         } else {
             url += "&s=" + search;
             if (type != null) {
                 if (type.equalsIgnoreCase("movie")) {
                     url += "&type=movie";
-                }else if (type.equalsIgnoreCase("series")) {
+                } else if (type.equalsIgnoreCase("series")) {
                     url += "&type=series";
-                }else if (type.equalsIgnoreCase("episode")) {
+                } else if (type.equalsIgnoreCase("episode")) {
                     url += "&type=episode";
                 }
             }
