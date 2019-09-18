@@ -2,16 +2,12 @@ package com.squeed.codefoundation.cleancode.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-@Service
-public class MovieService {
-
+public class MovieServiceV2 {
     @Autowired
     private RestTemplate restTemplate;
 
@@ -19,6 +15,37 @@ public class MovieService {
     public List<Movie> getMovies(String i, String title, String search,
                                  String type, int year, int plot, String returnType, int page){
 
+        String url = getUrl(i, title, search, type, year, plot, returnType, page);
+        if (url == null) return null;
+
+        List<Movie> movies = getOmdbMovies(search, url);
+        return movies;
+    }
+
+    private List<Movie> getOmdbMovies(String search, String url) {
+        List<Movie> movies = new ArrayList<>();
+        System.out.println(url);
+        if (search == null) {
+            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
+                    url, Movie.class);
+
+            int status = responseEntity.getStatusCode().value();
+
+            if (responseEntity.getBody().isResponse()) {
+                movies.add(responseEntity.getBody());
+            } else {
+                // something went wrong...
+            }
+        }else{
+            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
+                    url, SearchResponse.class);
+            int status = responseEntity.getStatusCode().value();
+            movies = responseEntity.getBody().getSearch();
+        }
+        return movies;
+    }
+
+    private String getUrl(String i, String title, String search, String type, int year, int plot, String returnType, int page) {
         String url = "http://www.omdbapi.com/?apikey=c626976c";
 
         if (search == null) {
@@ -53,7 +80,6 @@ public class MovieService {
         if (i != null){
             url += "&i=" + i;
         }else if (title != null){
-            url += "&i=" + i;
             url += "&t=" + title;
         }
 
@@ -80,38 +106,6 @@ public class MovieService {
         if (returnType != null){
             url += "&r=" + returnType;
         }
-        //http://www.omdbapi.com/?i=tt3896198&apikey=c626976c
-        /* parameters:
-        i=imdb ID
-        t=title
-        type=movie/series/episode
-        y=year
-        plot=short/full
-        r=data type of return value
-         */
-
-        List<Movie> movies = new ArrayList<>();
-        System.out.println(url);
-        if (search == null) {
-            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
-                    url, Movie.class);
-
-            int status = responseEntity.getStatusCode().value();
-
-            if (responseEntity.getBody().isResponse()) {
-                movies.add(responseEntity.getBody());
-            } else {
-                // something went wrong...
-            }
-        }else{
-            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
-                    url, SearchResponse.class);
-            int status = responseEntity.getStatusCode().value();
-            movies = responseEntity.getBody().getSearch();
-        }
-        //System.out.println(status);
-
-        //System.out.println(responseEntity.getBody());
-        return movies;
+        return url;
     }
 }
