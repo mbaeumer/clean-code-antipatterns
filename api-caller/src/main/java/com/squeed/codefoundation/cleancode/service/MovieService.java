@@ -11,6 +11,8 @@ import java.util.List;
 @Service
 public class MovieService {
 
+    public static final String OMDB_HOST_URL = "http://www.omdbapi.com/";
+    
     @Autowired
     private RestTemplate restTemplate;
 
@@ -45,7 +47,7 @@ public class MovieService {
             return null;
         }
 
-        String url = "http://www.omdbapi.com/?apikey=c626976c";
+        String url = OMDB_HOST_URL + "?apikey=c626976c";
 
         if (omdbApiParameters.getSearch() == null) {
 
