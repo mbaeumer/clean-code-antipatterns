@@ -51,7 +51,7 @@ public class MovieService {
         String url = getUrl(omdbApiParameters);
 
         List<Movie> movies = fetchMovies(url, omdbApiParameters);
-        System.out.println(url);
+
         return movies;
     }
 
