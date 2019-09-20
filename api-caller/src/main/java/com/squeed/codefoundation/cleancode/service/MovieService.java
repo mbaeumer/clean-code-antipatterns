@@ -50,8 +50,13 @@ public class MovieService {
 
         String url = getUrl(omdbApiParameters);
 
-        List<Movie> movies = new ArrayList<>();
+        List<Movie> movies = fetchMovies(url, omdbApiParameters);
         System.out.println(url);
+        return movies;
+    }
+
+    private List<Movie> fetchMovies(String url, OmdbApiParameters omdbApiParameters) {
+        List<Movie> movies = new ArrayList<>();
         if (omdbApiParameters.getSearch() != null) {
             ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
                     url, SearchResponse.class);
