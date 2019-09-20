@@ -48,6 +48,27 @@ public class MovieService {
             return null;
         }
 
+        String url = getUrl(omdbApiParameters);
+
+        List<Movie> movies = new ArrayList<>();
+        System.out.println(url);
+        if (omdbApiParameters.getSearch() != null) {
+            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
+                    url, SearchResponse.class);
+
+            movies = responseEntity.getBody().getSearch();
+        } else {
+            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
+                    url, Movie.class);
+
+            if (responseEntity.getBody().isResponse()) {
+                movies.add(responseEntity.getBody());
+            }
+        }
+        return movies;
+    }
+
+    private String getUrl(OmdbApiParameters omdbApiParameters) {
         String url = OMDB_HOST_URL + "?" + APIKEY;
 
         if (omdbApiParameters.getSearch() != null) {
@@ -105,22 +126,7 @@ public class MovieService {
             url += "&r=" + omdbApiParameters.getReturnType();
         }
 
-        List<Movie> movies = new ArrayList<>();
-        System.out.println(url);
-        if (omdbApiParameters.getSearch() != null) {
-            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
-                    url, SearchResponse.class);
-
-            movies = responseEntity.getBody().getSearch();
-        } else {
-            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
-                    url, Movie.class);
-
-            if (responseEntity.getBody().isResponse()) {
-                movies.add(responseEntity.getBody());
-            }
-        }
-        return movies;
+        return url;
     }
 
     private static boolean notEnoughParameters(String search, String imdbId, String title) {
