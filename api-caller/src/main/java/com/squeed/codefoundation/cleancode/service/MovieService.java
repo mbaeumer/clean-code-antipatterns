@@ -50,9 +50,7 @@ public class MovieService {
 
         String url = OMDB_HOST_URL + "?" + APIKEY;
 
-        if (omdbApiParameters.getSearch() == null) {
-
-        } else {
+        if (omdbApiParameters.getSearch() != null) {
             url += "&s=" + omdbApiParameters.getSearch();
             if (omdbApiParameters.getType() != null) {
                 if (omdbApiParameters.getType().equalsIgnoreCase("movie")) {
@@ -109,19 +107,18 @@ public class MovieService {
 
         List<Movie> movies = new ArrayList<>();
         System.out.println(url);
-        if (omdbApiParameters.getSearch() == null) {
+        if (omdbApiParameters.getSearch() != null) {
+            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
+                    url, SearchResponse.class);
+
+            movies = responseEntity.getBody().getSearch();
+        } else {
             ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
                     url, Movie.class);
 
             if (responseEntity.getBody().isResponse()) {
                 movies.add(responseEntity.getBody());
             }
-        } else {
-            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
-                    url, SearchResponse.class);
-
-            movies = responseEntity.getBody().getSearch();
-
         }
         return movies;
     }
