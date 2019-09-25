@@ -45,7 +45,7 @@ public class MovieService {
             return null;
         }
 
-        OmdbApi api = new OmdbApi(omdbApiParameters);
+        OmdbApi api = OmdbApi.getInstance(omdbApiParameters);
 
         String url = api.getUrl();
 

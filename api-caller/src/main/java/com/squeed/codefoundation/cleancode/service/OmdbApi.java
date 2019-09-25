@@ -17,6 +17,10 @@ public class OmdbApi {
         this.omdbApiParameters = omdbApiParameters;
     }
 
+    public static OmdbApi getInstance(OmdbApiParameters parameters) {
+        return new OmdbApi(parameters);
+    }
+
     public String getUrl() {
         String url = OMDB_HOST_URL + "?" + APIKEY;
 
