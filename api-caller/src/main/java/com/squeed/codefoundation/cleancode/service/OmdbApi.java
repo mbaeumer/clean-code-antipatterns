@@ -13,12 +13,15 @@ public class OmdbApi {
 
     private final OmdbApiParameters omdbApiParameters;
 
-    public OmdbApi(OmdbApiParameters omdbApiParameters) {
+    OmdbApi(OmdbApiParameters omdbApiParameters) {
         this.omdbApiParameters = omdbApiParameters;
     }
 
     public static OmdbApi getInstance(OmdbApiParameters parameters) {
-        return new OmdbApi(parameters);
+        if (parameters.getSearch() != null) {
+            return new SearchOmdbApi(parameters);
+        } else
+            return new OmdbApi(parameters);
     }
 
     public String getUrl() {
@@ -80,16 +83,12 @@ public class OmdbApi {
         }
 
         return url;
-
     }
 
     public List<Movie> fetchMovies(String url, RestTemplate restTemplate) {
         List<Movie> movies = new ArrayList<>();
         if (omdbApiParameters.getSearch() != null) {
-            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
-                    url, SearchResponse.class);
-
-            movies = responseEntity.getBody().getSearch();
+            throw new RuntimeException("This is impossible");
         } else {
             ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
                     url, Movie.class);
