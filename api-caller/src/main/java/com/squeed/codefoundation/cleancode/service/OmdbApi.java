@@ -11,7 +11,7 @@ public class OmdbApi {
     public static final String OMDB_HOST_URL = "http://www.omdbapi.com/";
     public static final String APIKEY = "apikey=c626976c";
 
-    private final OmdbApiParameters omdbApiParameters;
+    protected final OmdbApiParameters omdbApiParameters;
 
     OmdbApi(OmdbApiParameters omdbApiParameters) {
         this.omdbApiParameters = omdbApiParameters;
@@ -28,28 +28,7 @@ public class OmdbApi {
         String url = OMDB_HOST_URL + "?" + APIKEY;
 
         if (omdbApiParameters.getSearch() != null) {
-            url += "&s=" + omdbApiParameters.getSearch();
-            if (omdbApiParameters.getType() != null) {
-                if (omdbApiParameters.getType().equalsIgnoreCase("movie")) {
-                    url += "&type=movie";
-                } else if (omdbApiParameters.getType().equalsIgnoreCase("series")) {
-                    url += "&type=series";
-                } else if (omdbApiParameters.getType().equalsIgnoreCase("episode")) {
-                    url += "&type=episode";
-                }
-            }
-
-            if (omdbApiParameters.getYear() > 0) {
-                url += "&y=" + new Integer(omdbApiParameters.getYear()).toString();
-            }
-
-            if (omdbApiParameters.getReturnType() != null) {
-                url += "&r=" + omdbApiParameters.getReturnType();
-            }
-
-            if (omdbApiParameters.getPage() > 0 && omdbApiParameters.getPage() <= 100) {
-                url += "&page=" + omdbApiParameters.getPage();
-            }
+            throw new RuntimeException("Impossible, or possimpible");
         }
 
         if (omdbApiParameters.getImdbId() != null) {
