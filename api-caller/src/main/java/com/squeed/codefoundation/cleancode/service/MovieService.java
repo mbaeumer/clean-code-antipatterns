@@ -49,26 +49,8 @@ public class MovieService {
 
         String url = api.getUrl();
 
-        List<Movie> movies = fetchMovies(url, omdbApiParameters);
+        List<Movie> movies = api.fetchMovies(url, restTemplate);
 
-        return movies;
-    }
-
-    private List<Movie> fetchMovies(String url, OmdbApiParameters omdbApiParameters) {
-        List<Movie> movies = new ArrayList<>();
-        if (omdbApiParameters.getSearch() != null) {
-            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
-                    url, SearchResponse.class);
-
-            movies = responseEntity.getBody().getSearch();
-        } else {
-            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
-                    url, Movie.class);
-
-            if (responseEntity.getBody().isResponse()) {
-                movies.add(responseEntity.getBody());
-            }
-        }
         return movies;
     }
 
