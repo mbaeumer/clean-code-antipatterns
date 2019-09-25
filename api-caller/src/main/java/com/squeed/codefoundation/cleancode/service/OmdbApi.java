@@ -27,10 +27,6 @@ public class OmdbApi {
     public String getUrl() {
         String url = OMDB_HOST_URL + "?" + APIKEY;
 
-        if (omdbApiParameters.getSearch() != null) {
-            throw new RuntimeException("Impossible, or possimpible");
-        }
-
         if (omdbApiParameters.getImdbId() != null) {
             url += "&i=" + omdbApiParameters.getImdbId();
         } else if (omdbApiParameters.getTitle() != null) {
@@ -66,15 +62,11 @@ public class OmdbApi {
 
     public List<Movie> fetchMovies(String url, RestTemplate restTemplate) {
         List<Movie> movies = new ArrayList<>();
-        if (omdbApiParameters.getSearch() != null) {
-            throw new RuntimeException("This is impossible");
-        } else {
-            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
-                    url, Movie.class);
+        ResponseEntity<Movie> responseEntity =
+                restTemplate.getForEntity(url, Movie.class);
 
-            if (responseEntity.getBody().isResponse()) {
-                movies.add(responseEntity.getBody());
-            }
+        if (responseEntity.getBody().isResponse()) {
+            movies.add(responseEntity.getBody());
         }
         return movies;
     }
