@@ -1,5 +1,11 @@
 package com.squeed.codefoundation.cleancode.service;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class OmdbApi {
 
     public static final String OMDB_HOST_URL = "http://www.omdbapi.com/";
@@ -71,5 +77,23 @@ public class OmdbApi {
 
         return url;
 
+    }
+
+    public List<Movie> fetchMovies(String url, RestTemplate restTemplate) {
+        List<Movie> movies = new ArrayList<>();
+        if (omdbApiParameters.getSearch() != null) {
+            ResponseEntity<SearchResponse> responseEntity = restTemplate.getForEntity(
+                    url, SearchResponse.class);
+
+            movies = responseEntity.getBody().getSearch();
+        } else {
+            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(
+                    url, Movie.class);
+
+            if (responseEntity.getBody().isResponse()) {
+                movies.add(responseEntity.getBody());
+            }
+        }
+        return movies;
     }
 }
